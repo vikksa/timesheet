@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: timesheet-service
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/timesheet
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+    hibernate:
+      ddl-auto: validate
+#  flyway:
+#    locations: classpath:db/migrations
+#logging:
+#  level:
+#    org.springframework: debug
+grpc:
+  client:
+    GLOBAL:
+      negotiation-type: plaintext
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    enabled: true
+#    service-url:
