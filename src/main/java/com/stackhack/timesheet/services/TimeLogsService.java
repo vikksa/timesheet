@@ -11,5 +11,5 @@ public interface TimeLogsService {
     TimeLogs addTime(TimeLogsDto timeLogsDto);
     TimeLogs getTimeLog(UUID id);
     TimeLogs updateTimeLog(UUID id, TimeLogsDto timeLogsDto);
-    Page<TimeLogs> getTimeLogsPage(PaginationRequest paginationRequest);
+    Page<TimeLogs> getTimeLogsPage(Long from, Long to,UUID project,  UUID user, UUID costHead, PaginationRequest paginationRequest);
 }

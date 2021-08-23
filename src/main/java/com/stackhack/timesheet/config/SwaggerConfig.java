@@ -46,7 +46,7 @@ public class SwaggerConfig {
 
     @Bean
     public Docket costHeadApiInfo() {
-        return docket(CONTROLLERS_PACKAGE, "/costjead.*", "Cost Head API");
+        return docket(CONTROLLERS_PACKAGE, "/costhead.*", "Cost Head API");
     }
 
     @Bean

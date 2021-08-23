@@ -23,6 +23,9 @@ public class TimeLogs extends AuditedEntity {
   @OneToOne
   @JoinColumn(name = "cost_head_id", nullable = false)
   private CostHead costHead;
+  @JoinColumn(name = "timesheet_user_id", nullable = false)
+  @OneToOne
+  private TimeSheetUser timeSheetUser;
   private String programName;
 
   public UUID getId() {
@@ -101,5 +104,13 @@ public class TimeLogs extends AuditedEntity {
   @Override
   public int hashCode() {
     return Objects.hash(super.hashCode(), id, description, startTime, endTime, issueNumber, project, costHead, programName);
+  }
+
+  public TimeSheetUser getTimeSheetUser() {
+    return timeSheetUser;
+  }
+
+  public void setTimeSheetUser(TimeSheetUser timeSheetUser) {
+    this.timeSheetUser = timeSheetUser;
   }
 }

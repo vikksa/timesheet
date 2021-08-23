@@ -1,10 +1,7 @@
 package com.stackhack.timesheet.dtos;
 
-import com.stackhack.timesheet.models.CostHead;
-import com.stackhack.timesheet.models.Project;
 import com.stackhack.timesheet.models.TimeLogs;
 
-import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -13,10 +10,12 @@ public class TimeLogsDto extends AuditedDto {
 
     private UUID id;
     private String description;
-    private Date startTime;
-    private Date endTime;
+    private Long startTime;
+    private Long endTime;
     private String issueNumber;
     private ProjectDto project;
+    private TimeSheetUserDto timeSheetUser;
+    private UUID timeSheetUserId;
     private UUID projectId;
     private UUID costHeadId;
     private CostHeadDto costHead;
@@ -29,10 +28,11 @@ public class TimeLogsDto extends AuditedDto {
         super(timeLogs);
         this.id = timeLogs.getId();
         this.description = timeLogs.getDescription();
-        this.startTime = timeLogs.getStartTime();
-        this.endTime = timeLogs.getEndTime();
+        this.startTime = timeLogs.getStartTime() != null ? timeLogs.getStartTime().getTime() : null;
+        this.endTime = timeLogs.getEndTime() != null ? timeLogs.getEndTime().getTime() : null;
         this.issueNumber = timeLogs.getIssueNumber();
         this.project = new ProjectDto(timeLogs.getProject());
+        this.timeSheetUser = new TimeSheetUserDto(timeLogs.getTimeSheetUser());
         this.costHead = new CostHeadDto(timeLogs.getCostHead());
         this.programName = timeLogs.getProgramName();
     }
@@ -67,19 +67,19 @@ public class TimeLogsDto extends AuditedDto {
         this.description = description;
     }
 
-    public Date getStartTime() {
+    public Long getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(Long startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
+    public Long getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Date endTime) {
+    public void setEndTime(Long endTime) {
         this.endTime = endTime;
     }
 
@@ -129,5 +129,21 @@ public class TimeLogsDto extends AuditedDto {
 
     public void setCostHeadId(UUID costHeadId) {
         this.costHeadId = costHeadId;
+    }
+
+    public UUID getTimeSheetUserId() {
+        return timeSheetUserId;
+    }
+
+    public void setTimeSheetUserId(UUID timeSheetUserId) {
+        this.timeSheetUserId = timeSheetUserId;
+    }
+
+    public TimeSheetUserDto getTimeSheetUser() {
+        return timeSheetUser;
+    }
+
+    public void setTimeSheetUser(TimeSheetUserDto timeSheetUser) {
+        this.timeSheetUser = timeSheetUser;
     }
 }
