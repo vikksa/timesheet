@@ -13,7 +13,7 @@ public class Project extends AuditedEntity{
     private UUID id;
 
     private String name;
-    private Boolean archived;
+    private Boolean archived = false;
     @OneToOne(mappedBy = "project", cascade = CascadeType.ALL)
     private ProjectSettings projectSettings;
     @OneToOne(mappedBy = "project", cascade = CascadeType.ALL)

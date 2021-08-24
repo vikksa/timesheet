@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.UUID;
 
@@ -21,6 +22,9 @@ public class CostHeadServiceImpl implements CostHeadService {
 
     @Override
     public CostHead createCostHead(CostHeadDto costHeadDto) {
+        if (costHeadRepository.findByNameIgnoreCase(costHeadDto.getName()).isPresent()) {
+            throw new TimeSheetException(HttpStatus.CONFLICT, "COST_HEAD_NAME_ALREADY_EXISTS");
+        }
         CostHead costHead = new CostHead();
         costHead.setName(costHeadDto.getName());
         return costHeadRepository.save(costHead);
@@ -39,8 +43,15 @@ public class CostHeadServiceImpl implements CostHeadService {
     @Override
     public CostHead updateCostHead(UUID id, CostHeadDto costHeadDto) {
         CostHead costHead = getCostHead(id);
-        costHead.setName(costHeadDto.getName());
-        costHead.setArchived(costHeadDto.getArchived());
+        if (!ObjectUtils.isEmpty(costHeadDto.getName())) {
+            if (costHeadRepository.findByIdIsNotAndNameIgnoreCase(id, costHeadDto.getName()).isPresent()) {
+                throw new TimeSheetException(HttpStatus.CONFLICT, "COST_HEAD_NAME_ALREADY_EXISTS");
+            }
+            costHead.setName(costHeadDto.getName());
+        }
+        if (costHeadDto.getArchived() != null) {
+            costHead.setArchived(costHeadDto.getArchived());
+        }
         return costHeadRepository.save(costHead);
     }
 

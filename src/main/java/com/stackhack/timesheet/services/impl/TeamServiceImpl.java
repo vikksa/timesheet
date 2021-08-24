@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 import java.util.Set;
@@ -30,6 +31,9 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public Team createTeam(TeamDto teamDto) {
+        if (teamRepository.findByNameIgnoreCase(teamDto.getName()).isPresent()) {
+            throw new TimeSheetException(HttpStatus.CONFLICT, "TEAM_NAME_ALREADY_EXISTS");
+        }
         Team team = new Team();
         team.setName(teamDto.getName());
         return teamRepository.save(team);
@@ -48,12 +52,20 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public Team updateTeam(UUID id, TeamDto teamDto) {
         Team team = getTeam(id);
-        team.setName(teamDto.getName());
+        if (!ObjectUtils.isEmpty(teamDto.getName())) {
+            if (teamRepository.findByIdIsNotAndNameIgnoreCase(id, teamDto.getName()).isPresent()) {
+                throw new TimeSheetException(HttpStatus.CONFLICT, "TEAM_NAME_ALREADY_EXISTS");
+            }
+            team.setName(teamDto.getName());
+        }
         if (!CollectionUtils.isEmpty(teamDto.getMemberIds())) {
             Set<TimeSheetUser> teamMembers = team.getTeamMembers();
             List<TimeSheetUser> newTeamMembers = teamDto.getMemberIds().stream()
                     .map(timeSheetUserService::getUser).collect(Collectors.toList());
             teamMembers.addAll(newTeamMembers);
+        }
+        if (teamDto.getArchived() != null) {
+            team.setArchived(teamDto.getArchived());
         }
         return teamRepository.save(team);
     }

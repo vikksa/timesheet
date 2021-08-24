@@ -10,6 +10,7 @@ import com.stackhack.timesheet.services.ProjectService;
 import com.stackhack.timesheet.utils.PaginatedResponse;
 import com.stackhack.timesheet.utils.PaginationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -22,7 +23,7 @@ public class ProjectController {
     private ProjectService projectService;
 
     @PostMapping
-    public ProjectDto createProject(@RequestBody ProjectDto projectDto) {
+    public ProjectDto createProject(@RequestBody @Validated ProjectDto projectDto) {
         Project project = projectService.createProject(projectDto);
         return new ProjectDto(project);
     }

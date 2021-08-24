@@ -12,7 +12,7 @@ public class Team extends AuditedEntity {
     private UUID id;
 
     private String name;
-    private Boolean archived;
+    private Boolean archived = false;
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(

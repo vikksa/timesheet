@@ -3,6 +3,8 @@ package com.stackhack.timesheet.dtos;
 import com.stackhack.timesheet.models.CostHead;
 import com.stackhack.timesheet.models.Project;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -10,6 +12,8 @@ public class CostHeadDto extends AuditedDto {
 
 
     private UUID id;
+    @NotBlank
+    @Size(max = 50)
     private String name;
     private Boolean archived;
 

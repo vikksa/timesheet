@@ -7,6 +7,7 @@ import com.stackhack.timesheet.services.TeamService;
 import com.stackhack.timesheet.utils.PaginatedResponse;
 import com.stackhack.timesheet.utils.PaginationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class TeamController {
     private TeamService teamService;
 
     @PostMapping
-    public TeamDto createTeam(@RequestBody TeamDto teamDto) {
+    public TeamDto createTeam(@RequestBody @Validated TeamDto teamDto) {
         Team team = teamService.createTeam(teamDto);
         return new TeamDto(team);
     }

@@ -6,6 +6,7 @@ import com.stackhack.timesheet.services.CostHeadService;
 import com.stackhack.timesheet.utils.PaginatedResponse;
 import com.stackhack.timesheet.utils.PaginationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -18,7 +19,7 @@ public class CostHeadController {
     private CostHeadService costHeadService;
 
     @PostMapping
-    public CostHeadDto createCostHead(@RequestBody CostHeadDto costHeadDto) {
+    public CostHeadDto createCostHead(@RequestBody @Validated CostHeadDto costHeadDto) {
         CostHead costHead = costHeadService.createCostHead(costHeadDto);
         return new CostHeadDto(costHead);
     }

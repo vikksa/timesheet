@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.UUID;
 
@@ -31,6 +32,9 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project createProject(ProjectDto projectDto) {
+        if (projectRepository.findByNameIgnoreCase(projectDto.getName()).isPresent()) {
+            throw new TimeSheetException(HttpStatus.CONFLICT, "PROJECT_NAME_ALREADY_EXISTS");
+        }
         Project project = new Project();
         project.setName(projectDto.getName());
         return projectRepository.save(project);
@@ -49,8 +53,15 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Project updateProject(UUID id, ProjectDto projectDto) {
         Project project = getProject(id);
-        project.setName(projectDto.getName());
-        project.setArchived(projectDto.getArchived());
+        if (!ObjectUtils.isEmpty(projectDto.getName())) {
+            if (projectRepository.findByIdIsNotAndNameIgnoreCase(id, projectDto.getName()).isPresent()) {
+                throw new TimeSheetException(HttpStatus.CONFLICT, "PROJECT_NAME_ALREADY_EXISTS");
+            }
+            project.setName(projectDto.getName());
+        }
+        if (projectDto.getArchived() != null) {
+            project.setArchived(projectDto.getArchived());
+        }
         return projectRepository.save(project);
     }
 
@@ -67,11 +78,19 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectSettings updateProjectSettings(UUID projectId, ProjectSettingsDto projectSettingsDto) {
         ProjectSettings projectSettings = getProjectSettings(projectId);
-        projectSettings.setBillable(projectSettingsDto.getBillable());
-        projectSettings.setDays(projectSettingsDto.getDays());
+        if (projectSettingsDto.getBillable() != null) {
+            projectSettings.setBillable(projectSettingsDto.getBillable());
+        }
+        if (projectSettingsDto.getDays() != null && !projectSettings.getDays().isEmpty()) {
+            projectSettings.setDays(projectSettingsDto.getDays());
+        }
+        if (projectSettingsDto.getTimerOn() != null) {
+            projectSettings.setTimerOn(projectSettingsDto.getTimerOn());
+        }
+        if (projectSettingsDto.getTimeManualEntry() != null) {
+            projectSettings.setTimeManualEntry(projectSettingsDto.getTimeManualEntry());
+        }
         projectSettings.setLogo(projectSettingsDto.getLogo());
-        projectSettings.setTimerOn(projectSettingsDto.getTimerOn());
-        projectSettings.setTimeManualEntry(projectSettingsDto.getTimeManualEntry());
         return projectSettingsRepository.save(projectSettings);
     }
 
