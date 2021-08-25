@@ -9,5 +9,6 @@ import java.util.UUID;
 public interface ProjectRepository extends JpaRepository<Project, UUID> {
 
     Optional<Project> findByNameIgnoreCase(String name);
+
     Optional<Project> findByIdIsNotAndNameIgnoreCase(UUID id, String name);
 }

@@ -37,7 +37,7 @@ public class TimeController {
                                                          @RequestParam(value = "costHead", required = false) UUID costHead,
                                                          PaginationRequest paginationRequest) {
         return PaginatedResponse.toPage(timeLogsService.getTimeLogsPage(from, to
-        , project, user, costHead, paginationRequest).map(TimeLogsDto::new));
+                , project, user, costHead, paginationRequest).map(TimeLogsDto::new));
     }
 
     @PatchMapping("/{logId}")

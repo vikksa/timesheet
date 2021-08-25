@@ -1,0 +1,170 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > TeamController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.stackhack.timesheet.api</a>
+</div>
+
+<h1>Coverage Summary for Class: TeamController (com.stackhack.timesheet.api)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TeamController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    12.5%
+  </span>
+  <span class="absValue">
+    (1/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    7.7%
+  </span>
+  <span class="absValue">
+    (1/13)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.stackhack.timesheet.api;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import com.stackhack.timesheet.dtos.TeamDto;
+<i class="no-highlight">4</i>&nbsp;import com.stackhack.timesheet.dtos.TimeSheetUserDto;
+<i class="no-highlight">5</i>&nbsp;import com.stackhack.timesheet.models.Team;
+<i class="no-highlight">6</i>&nbsp;import com.stackhack.timesheet.services.TeamService;
+<i class="no-highlight">7</i>&nbsp;import com.stackhack.timesheet.utils.PaginatedResponse;
+<i class="no-highlight">8</i>&nbsp;import com.stackhack.timesheet.utils.PaginationRequest;
+<i class="no-highlight">9</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i class="no-highlight">10</i>&nbsp;import org.springframework.validation.annotation.Validated;
+<i class="no-highlight">11</i>&nbsp;import org.springframework.web.bind.annotation.*;
+<i class="no-highlight">12</i>&nbsp;
+<i class="no-highlight">13</i>&nbsp;import java.util.List;
+<i class="no-highlight">14</i>&nbsp;import java.util.Set;
+<i class="no-highlight">15</i>&nbsp;import java.util.UUID;
+<i class="no-highlight">16</i>&nbsp;import java.util.stream.Collectors;
+<i class="no-highlight">17</i>&nbsp;
+<i class="no-highlight">18</i>&nbsp;@RestController
+<i class="no-highlight">19</i>&nbsp;@RequestMapping(&quot;/team&quot;)
+<b class="fc"><i class="no-highlight">20</i>&nbsp;public class TeamController {</b>
+<i class="no-highlight">21</i>&nbsp;
+<i class="no-highlight">22</i>&nbsp;    @Autowired
+<i class="no-highlight">23</i>&nbsp;    private TeamService teamService;
+<i class="no-highlight">24</i>&nbsp;
+<i class="no-highlight">25</i>&nbsp;    @PostMapping
+<i class="no-highlight">26</i>&nbsp;    public TeamDto createTeam(@RequestBody @Validated TeamDto teamDto) {
+<b class="nc"><i class="no-highlight">27</i>&nbsp;        Team team = teamService.createTeam(teamDto);</b>
+<b class="nc"><i class="no-highlight">28</i>&nbsp;        return new TeamDto(team);</b>
+<i class="no-highlight">29</i>&nbsp;    }
+<i class="no-highlight">30</i>&nbsp;
+<i class="no-highlight">31</i>&nbsp;
+<i class="no-highlight">32</i>&nbsp;    @GetMapping(&quot;/{teamId}&quot;)
+<i class="no-highlight">33</i>&nbsp;    public TeamDto getTeam(@PathVariable(name = &quot;teamId&quot;) UUID teamId) {
+<b class="nc"><i class="no-highlight">34</i>&nbsp;        Team team = teamService.getTeam(teamId);</b>
+<b class="nc"><i class="no-highlight">35</i>&nbsp;        return new TeamDto(team);</b>
+<i class="no-highlight">36</i>&nbsp;    }
+<i class="no-highlight">37</i>&nbsp;
+<i class="no-highlight">38</i>&nbsp;    @PatchMapping(&quot;/{teamId}&quot;)
+<i class="no-highlight">39</i>&nbsp;    public TeamDto updateTeam(@PathVariable(name = &quot;teamId&quot;) UUID teamId, @RequestBody TeamDto teamDto) {
+<b class="nc"><i class="no-highlight">40</i>&nbsp;        Team team = teamService.updateTeam(teamId, teamDto);</b>
+<b class="nc"><i class="no-highlight">41</i>&nbsp;        return new TeamDto(team);</b>
+<i class="no-highlight">42</i>&nbsp;    }
+<i class="no-highlight">43</i>&nbsp;
+<i class="no-highlight">44</i>&nbsp;    @GetMapping
+<i class="no-highlight">45</i>&nbsp;    public PaginatedResponse&lt;TeamDto&gt; getTeamPage(PaginationRequest pageRequest) {
+<b class="nc"><i class="no-highlight">46</i>&nbsp;        return PaginatedResponse.toPage(teamService.listTeam(pageRequest).map(TeamDto::new));</b>
+<i class="no-highlight">47</i>&nbsp;    }
+<i class="no-highlight">48</i>&nbsp;
+<i class="no-highlight">49</i>&nbsp;    @GetMapping(&quot;/{teamId}/members&quot;)
+<i class="no-highlight">50</i>&nbsp;    public List&lt;TimeSheetUserDto&gt; getTeamMembers(@PathVariable(name = &quot;teamId&quot;) UUID teamId) {
+<b class="nc"><i class="no-highlight">51</i>&nbsp;        return teamService.getTeamMember(teamId).stream().map(TimeSheetUserDto::new).collect(Collectors.toList());</b>
+<i class="no-highlight">52</i>&nbsp;    }
+<i class="no-highlight">53</i>&nbsp;
+<i class="no-highlight">54</i>&nbsp;    @PatchMapping(&quot;/{teamId}/members&quot;)
+<i class="no-highlight">55</i>&nbsp;    public TeamDto addTeamMembers(@PathVariable(name = &quot;teamId&quot;) UUID teamId, @RequestParam(&quot;memberIds&quot;) Set&lt;UUID&gt; memberIds) {
+<b class="nc"><i class="no-highlight">56</i>&nbsp;        Team team = teamService.addTeamMember(teamId, memberIds);</b>
+<b class="nc"><i class="no-highlight">57</i>&nbsp;        return new TeamDto(team);</b>
+<i class="no-highlight">58</i>&nbsp;    }
+<i class="no-highlight">59</i>&nbsp;
+<i class="no-highlight">60</i>&nbsp;    @DeleteMapping(&quot;/{teamId}/members&quot;)
+<i class="no-highlight">61</i>&nbsp;    public TeamDto removeTeamMembers(@PathVariable(name = &quot;teamId&quot;) UUID teamId, @RequestParam(&quot;memberIds&quot;) Set&lt;UUID&gt; memberIds) {
+<b class="nc"><i class="no-highlight">62</i>&nbsp;        Team team = teamService.removeTeamMember(teamId, memberIds);</b>
+<b class="nc"><i class="no-highlight">63</i>&nbsp;        return new TeamDto(team);</b>
+<i class="no-highlight">64</i>&nbsp;    }
+<i class="no-highlight">65</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-08-25 15:18</div>
+</div>
+</body>
+</html>

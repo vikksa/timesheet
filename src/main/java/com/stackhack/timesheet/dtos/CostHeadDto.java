@@ -1,7 +1,6 @@
 package com.stackhack.timesheet.dtos;
 
 import com.stackhack.timesheet.models.CostHead;
-import com.stackhack.timesheet.models.Project;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;

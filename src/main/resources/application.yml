@@ -8,10 +8,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
     properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL5Dialect
-    hibernate:
-      ddl-auto: update
+      ddl-auto: create
 #  flyway:
 #    locations: classpath:db/migrations
 #logging:

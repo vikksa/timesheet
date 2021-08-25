@@ -55,8 +55,8 @@ public class ProjectController {
 
 
     @PatchMapping("/{projectId}/settings")
-    public ProjectSettingsDto updateProjectSettings(@PathVariable(name = "projectId") UUID projectId, @RequestBody ProjectSettingsDto ProjectSettingsDto) {
-        ProjectSettings projectSettings = projectService.updateProjectSettings(projectId, ProjectSettingsDto);
+    public ProjectSettingsDto updateProjectSettings(@PathVariable(name = "projectId") UUID projectId, @RequestBody ProjectSettingsDto projectSettingsDto) {
+        ProjectSettings projectSettings = projectService.updateProjectSettings(projectId, projectSettingsDto);
         return new ProjectSettingsDto(projectSettings);
     }
 

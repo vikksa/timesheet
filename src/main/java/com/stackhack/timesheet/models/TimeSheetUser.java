@@ -4,6 +4,8 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
+import static com.stackhack.timesheet.models.UserType.TEAM_MEMBER;
+
 @Entity
 public class TimeSheetUser extends AuditedEntity {
 
@@ -12,14 +14,17 @@ public class TimeSheetUser extends AuditedEntity {
     @Column(columnDefinition = "VARBINARY(16)")
     private UUID id;
 
+    @Column(unique = true, nullable = false)
     private String username;
+    @Column(unique = true, nullable = false)
     private String email;
     private String password;
+    @Column(nullable = false)
     private String firstName;
     private String lastName;
-    private Boolean archived;
+    private Boolean archived = false;
     @Enumerated(EnumType.STRING)
-    private UserType userType;
+    private UserType userType = TEAM_MEMBER;
 
     public UUID getId() {
         return id;

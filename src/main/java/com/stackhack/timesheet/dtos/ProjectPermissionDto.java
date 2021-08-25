@@ -106,7 +106,7 @@ public class ProjectPermissionDto extends AuditedDto {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         ProjectPermissionDto that = (ProjectPermissionDto) o;
-        return Objects.equals(id, that.id) && billingInfoVisibility == that.billingInfoVisibility && Objects.equals(allMemberPermissions, that.allMemberPermissions) && projectStatusVisibility == that.projectStatusVisibility && timeUpdation == that.timeUpdation && Objects.equals(allMemberVisitPermissions, that.allMemberVisitPermissions) && memberTimeVisibility == that.memberTimeVisibility && Objects.equals(memberAccessTeamDashBoard, that.memberAccessTeamDashBoard) ;
+        return Objects.equals(id, that.id) && billingInfoVisibility == that.billingInfoVisibility && Objects.equals(allMemberPermissions, that.allMemberPermissions) && projectStatusVisibility == that.projectStatusVisibility && timeUpdation == that.timeUpdation && Objects.equals(allMemberVisitPermissions, that.allMemberVisitPermissions) && memberTimeVisibility == that.memberTimeVisibility && Objects.equals(memberAccessTeamDashBoard, that.memberAccessTeamDashBoard);
     }
 
     @Override

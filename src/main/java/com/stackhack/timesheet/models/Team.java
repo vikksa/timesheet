@@ -1,7 +1,10 @@
 package com.stackhack.timesheet.models;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
 
 @Entity
 public class Team extends AuditedEntity {
@@ -11,6 +14,7 @@ public class Team extends AuditedEntity {
     @Column(columnDefinition = "VARBINARY(16)")
     private UUID id;
 
+    @Column(unique = true, nullable = false)
     private String name;
     private Boolean archived = false;
 

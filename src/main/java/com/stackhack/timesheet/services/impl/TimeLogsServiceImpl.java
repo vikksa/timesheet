@@ -19,11 +19,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.query.QueryUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -83,7 +85,7 @@ public class TimeLogsServiceImpl implements TimeLogsService {
     }
 
     @Override
-    public Page<TimeLogs> getTimeLogsPage(Long from, Long to,UUID project,  UUID user, UUID costHead, PaginationRequest paginationRequest) {
+    public Page<TimeLogs> getTimeLogsPage(Long from, Long to, UUID project, UUID user, UUID costHead, PaginationRequest paginationRequest) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<TimeLogs> query = cb.createQuery(TimeLogs.class);
         Root<TimeLogs> timeLogs = query.from(TimeLogs.class);

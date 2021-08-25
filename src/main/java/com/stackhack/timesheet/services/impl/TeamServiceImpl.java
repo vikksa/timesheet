@@ -8,7 +8,6 @@ import com.stackhack.timesheet.services.TeamService;
 import com.stackhack.timesheet.services.TimeSheetUserService;
 import com.stackhack.timesheet.utils.PaginationRequest;
 import com.stackhack.timesheet.utils.TimeSheetException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -23,10 +22,13 @@ import java.util.stream.Collectors;
 @Service
 public class TeamServiceImpl implements TeamService {
 
-    @Autowired
-    private TeamRepository teamRepository;
-    @Autowired
-    private TimeSheetUserService timeSheetUserService;
+    private final TeamRepository teamRepository;
+    private final TimeSheetUserService timeSheetUserService;
+
+    public TeamServiceImpl(TeamRepository teamRepository, TimeSheetUserService timeSheetUserService) {
+        this.teamRepository = teamRepository;
+        this.timeSheetUserService = timeSheetUserService;
+    }
 
 
     @Override

@@ -6,7 +6,6 @@ import com.stackhack.timesheet.models.TimeSheetUser;
 import com.stackhack.timesheet.utils.PaginationRequest;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 

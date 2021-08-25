@@ -16,75 +16,75 @@ import java.util.Objects;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AuditedEntity {
 
-  @NotNull
-  @CreatedDate
-  private Date createdAt;
-  @LastModifiedDate
-  private Date updatedAt;
-  @CreatedBy
-  @NotNull
-  private String createdBy;
-  @LastModifiedBy
-  private String updatedBy;
+    @NotNull
+    @CreatedDate
+    private Date createdAt;
+    @LastModifiedDate
+    private Date updatedAt;
+    @CreatedBy
+    @NotNull
+    private String createdBy;
+    @LastModifiedBy
+    private String updatedBy;
 
 
-  public Date getCreatedAt() {
-    return createdAt;
-  }
+    public Date getCreatedAt() {
+        return createdAt;
+    }
 
-  public void setCreatedAt(Date createdAt) {
-    this.createdAt = createdAt;
-  }
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
 
-  public Date getUpdatedAt() {
-    return updatedAt;
-  }
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
 
-  public void setUpdatedAt(Date modifiedAt) {
-    this.updatedAt = modifiedAt;
-  }
+    public void setUpdatedAt(Date modifiedAt) {
+        this.updatedAt = modifiedAt;
+    }
 
-  public String getCreatedBy() {
-    return createdBy;
-  }
+    public String getCreatedBy() {
+        return createdBy;
+    }
 
-  public void setCreatedBy(String createdBy) {
-    this.createdBy = createdBy;
-  }
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
 
-  public String getUpdatedBy() {
-    return updatedBy;
-  }
+    public String getUpdatedBy() {
+        return updatedBy;
+    }
 
-  public void setUpdatedBy(String modifiedBy) {
-    this.updatedBy = modifiedBy;
-  }
+    public void setUpdatedBy(String modifiedBy) {
+        this.updatedBy = modifiedBy;
+    }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o)
-      return true;
-    if (o == null || getClass() != o.getClass())
-      return false;
-    AuditedEntity that = (AuditedEntity) o;
-    return Objects.equals(createdAt, that.createdAt) &&
-        Objects.equals(updatedAt, that.updatedAt) &&
-        Objects.equals(createdBy, that.createdBy) &&
-        Objects.equals(updatedBy, that.updatedBy);
-  }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        AuditedEntity that = (AuditedEntity) o;
+        return Objects.equals(createdAt, that.createdAt) &&
+                Objects.equals(updatedAt, that.updatedAt) &&
+                Objects.equals(createdBy, that.createdBy) &&
+                Objects.equals(updatedBy, that.updatedBy);
+    }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(createdAt, updatedAt, createdBy, updatedBy);
-  }
+    @Override
+    public int hashCode() {
+        return Objects.hash(createdAt, updatedAt, createdBy, updatedBy);
+    }
 
-  @Override
-  public String toString() {
-    return "AuditedEntity{" +
-        "createdAt=" + createdAt +
-        ", modifiedAt=" + updatedAt +
-        ", createdBy='" + createdBy + '\'' +
-        ", modifiedBy='" + updatedBy + '\'' +
-        '}';
-  }
+    @Override
+    public String toString() {
+        return "AuditedEntity{" +
+                "createdAt=" + createdAt +
+                ", modifiedAt=" + updatedAt +
+                ", createdBy='" + createdBy + '\'' +
+                ", modifiedBy='" + updatedBy + '\'' +
+                '}';
+    }
 }

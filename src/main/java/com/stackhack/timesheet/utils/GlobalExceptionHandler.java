@@ -1,10 +1,7 @@
 package com.stackhack.timesheet.utils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,19 +19,8 @@ import java.util.*;
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private static final Log logger = LogFactory.getLog(GlobalExceptionHandler.class);
+    private static final Log LOG = LogFactory.getLog(GlobalExceptionHandler.class);
 
-    private PropertyNamingStrategy.PropertyNamingStrategyBase propertyNamingStrategy;
-
-    public GlobalExceptionHandler(ApplicationContext applicationContext) {
-        try {
-            final ObjectMapper objectMapper = (ObjectMapper) applicationContext.getBean("jacksonObjectMapper");
-            this.propertyNamingStrategy = (PropertyNamingStrategy.PropertyNamingStrategyBase)
-                    objectMapper.getPropertyNamingStrategy();
-        } catch (Exception e) {
-            logger.error("a valid PropertyNamingStrategyBase wasn't found in application context", e);
-        }
-    }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
@@ -42,7 +28,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                                                   HttpStatus status,
                                                                   WebRequest request) {
 
-        logger.debug(status.getDeclaringClass()
+        LOG.debug(status.getDeclaringClass()
                 + " raised a "
                 + status
                 + " error: "
@@ -51,12 +37,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorResponse response = new ErrorResponse();
         response.setStatus(status.value());
 
-        final Map<String, List<String>> fieldErrors = new HashMap<String, List<String>>();
+        final Map<String, List<String>> fieldErrors = new HashMap<>();
         for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
             String field = fieldError.getField();
-            if (this.propertyNamingStrategy != null) {
-                field = this.propertyNamingStrategy.translate(field);
-            }
 
             List<String> errors = fieldErrors.getOrDefault(field, new ArrayList<>());
             errors.add(fieldError.getDefaultMessage());
@@ -76,7 +59,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(AccessDeniedException.class)
     public final ResponseEntity<ErrorResponse> handleAccessDenied(AccessDeniedException ex) {
-        logger.debug("access denied cause: " + ex.getMessage());
+        LOG.debug("access denied cause: " + ex.getMessage());
         ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setStatus(HttpStatus.FORBIDDEN.value());
         errorResponse.setCode("CW_SYS:ERR_RESOURCE_ACCESS_DENIED");
@@ -88,7 +71,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorResponse response = new ErrorResponse();
         response.setStatus(ex.getHttpStatus().value());
         response.setCode(ex.getCode());
-        response.setData(ex.getData());
         response.setFieldErrors(ex.getFieldErrors());
         return new ResponseEntity<>(response, ex.getHttpStatus());
     }
@@ -96,7 +78,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<ErrorResponse> handleAllExceptions(Exception ex) {
         final UUID reference = UUID.randomUUID();
-        logger.error("REF [" + reference + "] > Uncaught error: " + ex.getMessage(), ex);
+        LOG.error("REF [" + reference + "] > Uncaught error: " + ex.getMessage(), ex);
 
         ErrorResponse response = new ErrorResponse();
         response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());

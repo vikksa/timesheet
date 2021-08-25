@@ -6,7 +6,7 @@ import com.stackhack.timesheet.models.UserType;
 import java.util.Objects;
 import java.util.UUID;
 
-public class TimeSheetUserDto extends AuditedDto{
+public class TimeSheetUserDto extends AuditedDto {
 
     private UUID id;
     private String username;
@@ -24,7 +24,7 @@ public class TimeSheetUserDto extends AuditedDto{
         super(userEntity);
         this.id = userEntity.getId();
         this.username = userEntity.getUsername();
-        this.email =userEntity.getEmail();
+        this.email = userEntity.getEmail();
         this.firstName = userEntity.getFirstName();
         this.lastName = userEntity.getLastName();
         this.archived = userEntity.getArchived();

@@ -6,7 +6,6 @@ import com.stackhack.timesheet.services.TimeSheetUserService;
 import com.stackhack.timesheet.utils.PaginatedResponse;
 import com.stackhack.timesheet.utils.PaginationRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;

@@ -13,9 +13,6 @@ import java.io.IOException;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class SimpleCorsFilter implements Filter {
 
-    public SimpleCorsFilter() {
-    }
-
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) res;
@@ -24,7 +21,7 @@ public class SimpleCorsFilter implements Filter {
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "x-requested-with, authorization, content-type");
 
-        if(!request.getRequestURI().contains("api-docs")){
+        if (!request.getRequestURI().contains("api-docs")) {
             response.setHeader("Access-Control-Allow-Origin", "*");
         }
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
@@ -34,11 +31,4 @@ public class SimpleCorsFilter implements Filter {
         }
     }
 
-    @Override
-    public void init(FilterConfig filterConfig) {
-    }
-
-    @Override
-    public void destroy() {
-    }
 }

@@ -1,6 +1,5 @@
 package com.stackhack.timesheet.models;
 
-import com.stackhack.timesheet.models.values.AllMemberPermission;
 import com.stackhack.timesheet.models.values.Days;
 
 import javax.persistence.*;
@@ -8,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+
 @Entity
 public class ProjectSettings extends AuditedEntity {
 

@@ -31,9 +31,6 @@ public class ErrorResponse {
     @JsonProperty
     List<Object> data;
 
-    public ErrorResponse() {
-    }
-
     public Map<String, List<String>> getFieldErrors() {
         return fieldErrors;
     }
